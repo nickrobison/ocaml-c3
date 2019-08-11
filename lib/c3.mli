@@ -70,10 +70,10 @@ module Segment : sig
     | `Area_spline  (** Render with splines to make it appear smooth with a translucent fill underneath *)
     | `Area_step    (** Render as horizontal steps with a translucent fill underneath *)
     | `Bar          (** Render as discrete vertical bars *)
-  ]
+  ] [@@deriving sexp]
   val string_of_kind: kind -> string
 
-  type t
+  type t [@@deriving sexp]
   (** An unrendered line segment within a Line chart *)
 
   val make: points:(float * float) list -> label:string
@@ -92,11 +92,11 @@ type flow_to = [
 module Line : sig
   (** A line chart *)
 
-  type kind = [ `Timeseries | `XY ]
+  type kind = [ `Timeseries | `XY ] [@@deriving sexp]
   (** A line chart can show either timeseries data or arbitrary values on the
       X axis. *)
 
-  type t
+  type t [@@deriving sexp, compare]
   (** An unrendered line chart *)
 
   val make: ?x_format:string -> ?x_label:string -> ?y_label:string -> kind:kind -> unit -> t
@@ -110,7 +110,7 @@ module Line : sig
   (** Add a group of line segments to an unrendered line chart. By grouping line
       segments they will be rendered stacked. *)
 
-  type display
+  type display [@@deriving sexp,compare]
   (** A rendered line chart *)
 
   val render: bindto:string -> t -> display

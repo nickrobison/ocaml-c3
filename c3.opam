@@ -14,6 +14,7 @@ depends: [
   "js_of_ocaml-ppx" {< "3.4.0" }
   "lwt"
   "cohttp"
+  "ppx_deriving"
 ]
 synopsis: "OCaml bindings for the Javascript c3 charting library."
 description:

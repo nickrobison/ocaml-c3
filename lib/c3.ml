@@ -13,6 +13,8 @@ ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF
 OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
 
 *)
+open! Sexplib.Std
+open! Ppx_compare_lib.Builtin
 
 module List = struct
   include List
@@ -205,7 +207,7 @@ type kind = [
 | `Area_spline
 | `Area_step
 | `Bar
-]
+] [@@deriving sexp, compare]
 
   let string_of_kind = function
   | `Line -> "Line"
@@ -219,7 +221,7 @@ type kind = [
     points: (float * float) list;
     label: string;
     kind: kind;
-  }
+  } [@@deriving sexp, compare]
 
   let make ~points ~label ?(kind = `Line) () =
     { points; label; kind }
@@ -392,7 +394,7 @@ end
 
 
 module Line = struct
-  type kind = [ `Timeseries | `XY ]
+  type kind = [ `Timeseries | `XY ] [@@deriving sexp, compare]
 
   type t = {
     kind: kind;
@@ -400,7 +402,7 @@ module Line = struct
     x_format: string;
     y_label: string option;
     groups: Segment.t list list;
-  }
+  } [@@deriving sexp, compare]
 
   let make ?(x_format = "%d") ?x_label ?y_label ~kind () =
     { kind; x_format; x_label; y_label; groups = [] }
@@ -423,7 +425,7 @@ module Line = struct
     } in
     { Chart.empty with Chart.x_axis; y_axis; columns; groups }
 
-  type display = kind * unit
+  type display = kind * unit [@@deriving sexp,compare]
 
   let render ~bindto t =
     let chart = generate bindto (to_chart t) in
