@@ -15,6 +15,7 @@ OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
 *)
 open! Sexplib.Std
 open! Ppx_compare_lib.Builtin
+open Js_of_ocaml
 
 module List = struct
   include List
