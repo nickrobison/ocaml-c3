@@ -77,11 +77,13 @@ module Axis_type = struct
   type t = [
     | `Timeseries
     | `Line
+    | `Linear
   ]
 
   let to_string = function
     | `Timeseries -> "timeseries"
     | `Line -> "line"
+    | `Linear -> "linear"
 end
 
 module Axis = struct
@@ -422,7 +424,7 @@ module Line = struct
       Axis.ty = ty; format = Some t.x_format; label = t.x_label;
     } in
     let y_axis = Some {
-      Axis.ty = `Line; format = None; label = t.y_label;
+      Axis.ty = `Linear; format = None; label = t.y_label;
     } in
     { Chart.empty with Chart.x_axis; y_axis; columns; groups }
 
